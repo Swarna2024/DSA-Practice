@@ -1,4 +1,4 @@
-Leetcode 542
+Leetcode 542 // Using BFS
 
 class Solution {
     public int[][] updateMatrix(int[][] mat) {
