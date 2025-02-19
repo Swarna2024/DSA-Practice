@@ -37,3 +37,48 @@ class Solution {
         return dup;
     }
 }
+
+Leetcode 1020 // Using DFS
+
+class Solution {
+    public int numEnclaves(int[][] board) {
+        int dir[][] = new int[][] { {0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        boolean visited[][] = new boolean[board.length][board[0].length];
+        int count = 0;
+        for(int i=0;i<board.length;i++){
+            if( !visited[i][0] )
+                dfs( board, i, 0, visited, dir);
+            if( !visited[i][board[i].length-1])
+                dfs( board, i, board[i].length-1, visited, dir);    
+        }
+        for(int i=0;i<board[0].length;i++){
+            if( !visited[0][i] )
+                dfs( board, 0, i, visited, dir);
+            if( !visited[board.length-1][i])
+                dfs( board, board.length-1, i, visited, dir);    
+        }
+        for(int i=0;i<board.length;i++){
+            for(int j=0;j<board[0].length;j++){
+                if( !visited[i][j] && board[i][j] == 1){
+                   count++;
+                }
+            }
+        }
+        return count;
+        
+    }
+    public static void dfs(int[][] grid, int x, int y, boolean visited[][], int dir[][]){
+        visited[x][y] = true;
+        if( grid[x][y] == 0){
+            return;
+        }
+        boolean ans = true;
+        for(int i=0;i<4;i++){
+            int nextX = x+dir[i][0];
+            int nextY = y+dir[i][1];
+            if( nextX >= 0 && nextX < grid.length && nextY >= 0 && nextY < grid[0].length && !visited[nextX][nextY]){
+                dfs(grid, nextX, nextY, visited, dir);
+            }
+        }
+    }
+}
